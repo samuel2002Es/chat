@@ -9,11 +9,15 @@
     </q-toolbar>
   </div>
   <vista-acceso-vue v-if="!user"></vista-acceso-vue>
-  <vista-usuarios-activos v-if="user"></vista-usuarios-activos>
+  <div v-else>
+    <vista-usuarios-activos></vista-usuarios-activos>
+    <vista-chat-vue></vista-chat-vue>
+  </div>
 </template>
 <script>
 import VistaAccesoVue from "src/components/VistaAcceso.vue";
 import VistaUsuariosActivos from "src/components/VistaUsuariosActivos.vue";
+import VistaChatVue from "src/components/VistaChat.vue";
 
 import { getAuth, signOut } from "firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
@@ -34,6 +38,7 @@ export default {
   components: {
     VistaAccesoVue,
     VistaUsuariosActivos,
+    VistaChatVue,
   },
   created() {
     this.isAutenticated();
