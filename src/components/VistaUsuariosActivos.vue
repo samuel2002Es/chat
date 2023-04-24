@@ -24,29 +24,31 @@
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { db } from "src/boot/firebase";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
-import { inject } from "vue";
+
+import { mapState, mapActions } from "pinia";
+import { useStore } from "../stores/store";
 export default {
   data() {
     return {
-      vari: "mail",
-      uidSeleccionado: this.vari,
       users: [],
+      vari: "",
       uid: null,
     };
+  },
+  computed: {
+    ...mapState(useStore, ["uidSeleccionado"]),
   },
   watch: {
     // whenever question changes, this function will run
     vari: function () {
-      this.$root.$emit("uidSend", this.uidSeleccionado);
+      this.uidActual(this.vari);
     },
-  },
-  created() {
-    console.log(this.uidSeleccionado);
   },
   mounted() {
     this.obtenerDatos();
   },
   methods: {
+    ...mapActions(useStore, ["uidActual"]),
     async obtenerDatos() {
       const q = query(collection(db, "usuarios"));
       const unsubscribe = onSnapshot(q, (snapshot) => {
