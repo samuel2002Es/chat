@@ -108,7 +108,11 @@ export default {
           // doc.data() is never undefined for query doc snapshots
           console.log(doc.id, " => ", doc.data());
           this.chats.push({ ...doc.data(), id: doc.id });
-          window.scrollTo(0, this.RefChat.scrollHeight);
+          if (this.RefChat != null) {
+            setTimeout(() => {
+              window.scrollTo(0, this.RefChat.scrollHeight);
+            }, 50);
+          }
         });
       } catch (error) {
         console.log(error);
