@@ -125,7 +125,7 @@ export default {
   watch: {
     // whenever question changes, this function will run
     uidSeleccionado(newUid) {
-      this.obtenerData();
+      /* this.obtenerData(); */
       if (this.unsuscribe) {
         this.unsuscribe();
         if (newUid) {
@@ -208,7 +208,6 @@ export default {
         );
 
         this.message = "";
-        this.obtenerData();
       } catch (error) {
         console.log("no funciona");
         console.log(error);
