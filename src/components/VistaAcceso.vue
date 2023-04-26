@@ -77,8 +77,8 @@ import { db } from "../boot/firebase";
 export default {
   setup() {
     const $q = useQuasar();
-    const password = ref("123123");
-    const email = ref("prueba@gmail.com");
+    const password = ref("");
+    const email = ref("");
     const acceder = ref(true);
     return {
       password,
