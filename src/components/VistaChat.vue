@@ -1,6 +1,6 @@
 <template>
   <!-- para que haga escroll automatico -->
-  <div ref="RefChat" v-if="uidSeleccionado != ''">
+  <div ref="RefChat" v-if="uidSeleccionado != ''" class="estilosmar">
     <q-layout>
       <div class="q-pa-md row justify-center">
         <div style="width: 100%; max-width: 600px">
@@ -222,5 +222,8 @@ export default {
   height: 100vh;
   width: 100vw;
   margin-top: 50px;
+}
+.estilosmar {
+  margin-top: 100px;
 }
 </style>
