@@ -1,18 +1,20 @@
 <template>
-  <div class="">
-    <q-toolbar class="bg-primary text-white">
-      <q-btn flat round dense icon="favorite" class="q-mr-sm" />
+  <q-layout view="lHh Lpr lFf">
+    <q-header bordered>
+      <q-toolbar>
+        <q-btn flat round dense icon="favorite" class="q-mr-sm" />
 
-      <q-toolbar-title>{{ user ? email : "Chat" }}</q-toolbar-title>
+        <q-toolbar-title>{{ user ? email : "Chat" }}</q-toolbar-title>
 
-      <q-btn flat round dense icon="logout" @click="salir" v-if="user" />
-    </q-toolbar>
-  </div>
-  <vista-acceso-vue v-if="!user"></vista-acceso-vue>
-  <div v-else>
-    <vista-usuarios-activos></vista-usuarios-activos>
-    <vista-chat-vue></vista-chat-vue>
-  </div>
+        <q-btn flat round dense icon="logout" @click="salir" v-if="user" />
+      </q-toolbar>
+    </q-header>
+    <vista-acceso-vue v-if="!user"></vista-acceso-vue>
+    <div v-else>
+      <vista-usuarios-activos></vista-usuarios-activos>
+      <vista-chat-vue></vista-chat-vue>
+    </div>
+  </q-layout>
 </template>
 <script>
 import VistaAccesoVue from "src/components/VistaAcceso.vue";
@@ -81,3 +83,4 @@ export default {
   },
 };
 </script>
+<style scoped></style>

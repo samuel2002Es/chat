@@ -1,6 +1,6 @@
 <template>
   <!-- para que haga escroll automatico -->
-  <div v-if="uidSeleccionado != ''" ref="RefChat">
+  <div ref="RefChat" v-if="uidSeleccionado != ''">
     <q-layout>
       <div class="q-pa-md row justify-center">
         <div style="width: 100%; max-width: 600px">
@@ -31,10 +31,66 @@
         </q-form>
       </q-footer>
     </q-layout>
-    <q-btn @click="obtenerData()">obtener</q-btn>
+    <!-- <q-btn @click="obtenerData()">obtener</q-btn> -->
   </div>
   <div v-else>
-    <h5>Selecciona un usuario para escribirle un mensaje</h5>
+    <div class="row justify-center items-center" style="height: 100vh">
+      <div style="width: 80vw">
+        <q-carousel
+          animated
+          v-model="slide"
+          navigation
+          infinite
+          :autoplay="autoplay"
+          arrows
+          transition-prev="slide-right"
+          transition-next="slide-left"
+          @mouseenter="autoplay = false"
+          @mouseleave="autoplay = true"
+        >
+          <q-carousel-slide
+            :name="1"
+            img-src="https://cdn.quasar.dev/img/mountains.jpg"
+          >
+            <div class="q-mt-md text-center" style="">
+              Por ahora no se que hacer con esta parte, asi que puse imagenes
+              chidas, para poder utilizar esta aplicacion selecciona en todos
+              los usuarios con quien deseas hablar
+            </div>
+          </q-carousel-slide>
+          <q-carousel-slide
+            :name="2"
+            img-src="https://cdn.quasar.dev/img/parallax1.jpg"
+          >
+            <div class="q-mt-md text-center" style="">
+              Por ahora no se que hacer con esta parte, asi que puse imagenes
+              chidas, para poder utilizar esta aplicacion selecciona en todos
+              los usuarios con quien deseas hablar
+            </div>
+          </q-carousel-slide>
+          <q-carousel-slide
+            :name="3"
+            img-src="https://cdn.quasar.dev/img/parallax2.jpg"
+          >
+            <div class="q-mt-md text-center" style="">
+              Por ahora no se que hacer con esta parte, asi que puse imagenes
+              chidas, para poder utilizar esta aplicacion selecciona en todos
+              los usuarios con quien deseas hablar
+            </div>
+          </q-carousel-slide>
+          <q-carousel-slide
+            :name="4"
+            img-src="https://cdn.quasar.dev/img/quasar.jpg"
+          >
+            <div class="q-mt-md text-center" style="">
+              Por ahora no se que hacer con esta parte, asi que puse imagenes
+              chidas, para poder utilizar esta aplicacion selecciona en todos
+              los usuarios con quien deseas hablar
+            </div>
+          </q-carousel-slide>
+        </q-carousel>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -62,6 +118,8 @@ export default {
       chats: [],
       unsuscribe: null,
       RefChat: null,
+      slide: 1,
+      autoplay: true,
     };
   },
   watch: {
@@ -104,15 +162,25 @@ export default {
       const querySnapshot = await getDocs(q);
       this.chats = [];
       try {
-        unsuscribe = querySnapshot.forEach((doc) => {
+        /* unsuscribe = querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
           console.log(doc.id, " => ", doc.data());
           this.chats.push({ ...doc.data(), id: doc.id });
-          if (this.RefChat != null) {
-            setTimeout(() => {
-              window.scrollTo(0, this.RefChat.scrollHeight);
-            }, 50);
-          }
+        }); */
+        unsubscribe = onSnapshot(q, (snapshot) => {
+          snapshot.docChanges().forEach((change) => {
+            if (change.type === "added") {
+              /* console.log("New messaje: ", change.doc.data()); */
+              this.chats.push({ ...change.doc.data(), id: change.doc.id });
+            }
+            try {
+              setTimeout(() => {
+                window.scrollTo(0, this.$refs.RefChat.scrollHeight);
+              }, 50);
+            } catch (error) {
+              console.log(error);
+            }
+          });
         });
       } catch (error) {
         console.log(error);
@@ -140,6 +208,7 @@ export default {
         );
 
         this.message = "";
+        this.obtenerData();
       } catch (error) {
         console.log("no funciona");
         console.log(error);
@@ -149,4 +218,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.estilos {
+  height: 100vh;
+  width: 100vw;
+  margin-top: 50px;
+}
+</style>

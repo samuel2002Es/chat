@@ -1,11 +1,11 @@
 <template>
-  <div class="tabs-zindex" position="top" expand>
+  <q-page-sticky position="top" expand class="tabs-zindex">
     <q-tabs
       v-model="vari"
       inline-label
       outside-arrows
       mobile-arrows
-      class="bg-primary text-white shadow-2"
+      class="bg-primary text-white shadow-2 full-width"
     >
       <q-tab
         v-for="user of arraySinUser()"
@@ -16,7 +16,7 @@
         :class="user.estado ? 'text-white' : 'text-grey'"
       />
     </q-tabs>
-  </div>
+  </q-page-sticky>
   <!-- <q-btn @click="obtenerDatos">obtener</q-btn> -->
 </template>
 
